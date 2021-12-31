@@ -150,7 +150,7 @@ if __name__ == "__main__":
         np.save(label_save_path, labels)
         print("[*]保存数据... ...")
 
-    div = int(0.1 * len(data))  # 分割测试集和训练集
+    div = int(0.2 * len(data))  # 分割测试集和训练集
     train_data = MyDataset(data[0:-div], labels[0:-div])
     test_data = MyDataset(data[-div:], labels[-div:])
 
