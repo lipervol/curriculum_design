@@ -23,7 +23,7 @@ def svd_decomposition(input_data, channels):
 # 分割图像
 def create_dataset(input_data, input_label, window_size, remove_zeros=True):
     shape = input_data.shape
-    margin = int(window_size / 2)
+    margin = int(window_size // 2)
     pad = np.zeros((shape[0] + 2 * margin, shape[1] + 2 * margin, shape[2]))
     pad[margin:shape[0] + margin, margin:shape[1] + margin, :] = input_data
     dataset = np.zeros((shape[0] * shape[1], window_size, window_size, shape[2]))
