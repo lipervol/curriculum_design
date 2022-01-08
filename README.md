@@ -8,9 +8,9 @@
 
 ### 方法介绍
 
-采用奇异值分解算法(SVD)进行降维（154\*154\*200-->154\*154\*64）
+采用奇异值分解算法(SVD)进行降维(154,154,200)-->(154,154,64)
 
-采用以下ResNet进行分类：
+图像切割为为(154\*154,64,8,8)后，采用以下ResNet进行分类：
 
 ![ResNet](https://github.com/lipervol/curriculum_design/blob/master/ResNet.png)
 
