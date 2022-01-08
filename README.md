@@ -8,12 +8,22 @@
 
 ### 方法介绍
 
-*（暂时懒得写）*
+采用奇异值分解算法(SVD)进行降维（154\*154\*200-->154\*154\*64）
+
+采用以下ResNet进行分类：
+
+![ResNet](https://github.com/lipervol/curriculum_design/blob/master/ResNet.png)
 
 ### 实现效果
 
-随机挑选80%作为测试集，20%作为训练集，迭代48次
+随机挑选40%作为测试集，60%作为训练集，迭代48次
 
 左边是ground truth，右边为预测输出
 
 ![result](https://github.com/lipervol/curriculum_design/blob/master/rst.png)
+
+Kappa系数为：0.9977835341413226
+
+奇异值矩阵：
+
+![Hot](https://github.com/lipervol/curriculum_design/blob/master/confusion_matrix.png)
