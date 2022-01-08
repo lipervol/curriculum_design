@@ -1,6 +1,8 @@
 #! coding:UTF-8
+#@Liupengbin https://github.com/lipervol
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 import scipy.io as sio
 from sklearn.decomposition import TruncatedSVD
 from torch.utils.data import Dataset
@@ -35,7 +37,7 @@ def create_dataset(input_data, input_label, window_size, remove_zeros=True):
             dataset[idx] = split_data
             label_np[idx] = input_label[i - margin, j - margin]
             idx += 1
-    if remove_zeros:
+    if remove_zeros:  # 去除无标签的数据
         dataset = dataset[label_np > 0, :, :, :]
         label_np = label_np[label_np > 0]
         label_np -= 1
@@ -150,7 +152,7 @@ if __name__ == "__main__":
         np.save(label_save_path, labels)
         print("[*]保存数据... ...")
 
-    div = int(0.2 * len(data))  # 分割测试集和训练集
+    div = int(0.4 * len(data))  # 分割测试集和训练集
     train_data = MyDataset(data[0:-div], labels[0:-div])
     test_data = MyDataset(data[-div:], labels[-div:])
 
@@ -169,7 +171,8 @@ if __name__ == "__main__":
     loss = nn.CrossEntropyLoss().to(device)
     optimizer = op.Adam(model.parameters(), lr=1e-3)
 
-    train_epochs = 16  # 迭代次数
+    hist = []
+    train_epochs = 48  # 迭代次数
     print("[*]开始训练... ...")
     for epochs in range(train_epochs):
         model.train()  # 训练模式
@@ -207,8 +210,15 @@ if __name__ == "__main__":
                 total_correct += correct
                 total_num += imgs.size(0)
         acc = total_correct / total_num
+        hist.append(acc)
         print("测试集正确率:", acc)
 
     print("[*]训练结束... ...")
+    plt.plot([i+1 for i in range(train_epochs)],hist, 'ro-', color='#4169E1', alpha=1, linewidth=1, label='Accuracy Rate')
+    plt.legend(loc='best')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy Rate')
+    plt.show()
+
     torch.save(model, save_path)
     print("[*]保存模型... ...")

@@ -1,12 +1,16 @@
 #! coding:UTF-8
+#@Liupengbin https://github.com/lipervol
 import sys
-import matplotlib.pyplot as plt
 import numpy as np
 import scipy.io as sio
 import os
 import torch
 from torch.utils.data import DataLoader
 import spectral as spy
+from sklearn.metrics import cohen_kappa_score
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
 import train
 from train import ResnetBlock, ResNet
 
@@ -54,6 +58,19 @@ with torch.no_grad():
             idx += 1
         print("\r[*]已完成：%.2f" % (float(idx / (gt.shape[0] * gt.shape[1])) * 100), "%", end='')
 gt_pred = np.uint8(np.reshape(gt_pred, (gt.shape[0], gt.shape[1])))
+
+# 精度分析
+kappa = cohen_kappa_score(gt.reshape(-1, 1), gt_pred.reshape(-1, 1))  # kappa系数
+print("\nKappa系数为：", kappa)
+matrix = confusion_matrix(gt[gt > 0].reshape(-1, 1), gt_pred[gt > 0].reshape(-1, 1),
+                          labels=[i + 1 for i in range(16)])  # 混淆矩阵
+print("混淆矩阵为：\n", matrix)
+sns.set()
+f, ax = plt.subplots()
+sns.heatmap(matrix, annot=True, ax=ax)  # 画热力图
+ax.set_title('confusion matrix')
+ax.set_xlabel('predict')
+ax.set_ylabel('true')
 
 # 显示结果
 print("\n[*]显示结果... ...")
