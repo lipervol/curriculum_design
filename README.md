@@ -24,6 +24,6 @@
 
 Kappa系数为：0.9977835341413226
 
-奇异值矩阵：
+混淆矩阵：
 
 ![Hot](https://github.com/lipervol/curriculum_design/blob/master/confusion_matrix.png)
