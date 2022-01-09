@@ -14,6 +14,10 @@
 
 ![ResNet](https://github.com/lipervol/curriculum_design/blob/master/ResNet.png)
 
+训练迭代次数为48次，测试集正确率变化如下：
+
+![Acc](https://github.com/lipervol/curriculum_design/blob/master/Acc.png)
+
 ### 实现效果
 
 随机挑选40%作为训练集，60%作为测试集，迭代48次
